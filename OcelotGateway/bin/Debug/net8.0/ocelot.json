@@ -1,0 +1,86 @@
+﻿{
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/api/products",
+      "UpstreamHttpMethod": ["GET"],
+      "DownstreamPathTemplate": "/api/products",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "localhost", "Port": 5001 }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/products/{id}",
+      "UpstreamHttpMethod": ["GET"],
+      "DownstreamPathTemplate": "/api/products/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "localhost", "Port": 5001 }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/products",
+      "UpstreamHttpMethod": ["POST"],
+      "DownstreamPathTemplate": "/api/products",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "localhost", "Port": 5001 }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/api/products/{id}",
+      "UpstreamHttpMethod": ["PUT", "DELETE"],
+      "DownstreamPathTemplate": "/api/products/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "localhost", "Port": 5001 }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/api/orders",
+      "UpstreamHttpMethod": ["GET"],
+      "DownstreamPathTemplate": "/api/orders",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "localhost", "Port": 5002 }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "Key": "AuthLogin",
+      "UpstreamPathTemplate": "/api/auth/login",
+      "UpstreamHttpMethod": ["POST"],
+      "DownstreamPathTemplate": "/api/auth/login",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "localhost", "Port": 5003 }
+      ],
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 5
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5000",
+    "RateLimitOptions": {
+      "RouteKeys": ["AuthLogin"],
+      "ClientIdHeader": "X-Client-Id",
+      "EnableHeaders": true,
+      "StatusCode": 429,
+      "QuotaMessage": "Too many login attempts. Try again later."
+    }
+  }
+}
